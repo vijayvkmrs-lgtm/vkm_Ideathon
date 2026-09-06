@@ -1,0 +1,691 @@
+1. Role and responsibility
+
+Act as a senior Android architect, public-health specialist, clinical informatics expert, data scientist, cybersecurity engineer, accessibility specialist, and medical-device compliance adviser.
+
+Design and develop a secure, multilingual Android application named Global Multimorbidity Care Assistant.
+
+The application will help adults record health information, identify possible chronic-disease risks, manage multiple diagnosed chronic conditions, communicate with health professionals, and locate verified health facilities and support services worldwide.
+
+The application must not claim to replace a doctor. It must not present AI-generated results as confirmed diagnoses or independently issue prescriptions.
+
+2. Main purpose
+
+Develop an Android application that can:
+
+1. Collect demographic, clinical, behavioural, social, economic, and healthcare-access information.
+
+2. Record multiple diagnosed chronic conditions and their interactions.
+
+3. Conduct evidence-based screening and risk assessment.
+
+4. Analyse symptoms, measurements, medication history, laboratory results, and trends.
+
+5. Produce an understandable health-risk summary.
+
+6. identify potentially urgent symptoms and direct the user to appropriate emergency care.
+
+7. Provide safe lifestyle, self-care, adherence, and appointment suggestions.
+
+8. Connect users with verified hospitals, primary healthcare centres, specialists, pharmacies, laboratories, telemedicine services, community organisations, mental-health services, and emergency services.
+
+9. Enable a multilingual voice assistant for users with limited literacy, visual impairment, or difficulty typing.
+
+10. Support clinician review, referral, follow-up, and legally valid electronic prescriptions where permitted.
+
+11. Generate anonymised and aggregated information for authorised public-health analysis, subject to separate consent.
+
+3. Intended users
+
+Design separate interfaces and permissions for:
+
+1. Adult patients.
+
+2. Family members and authorised caregivers.
+
+3. Community health workers.
+
+4. Doctors, nurses, counsellors, and allied health professionals.
+
+5. Health-facility administrators.
+
+6. Approved researchers and public-health officials.
+
+7. System administrators with restricted technical permissions.
+
+Do not allow administrators or researchers to view personally identifiable health information unless explicitly authorised for a legitimate purpose.
+
+4. Conditions covered
+
+Initially support screening and management for:
+
+1. Hypertension.
+
+2. Diabetes.
+
+3. Cardiovascular disease.
+
+4. Chronic respiratory diseases, including asthma and COPD.
+
+5. Chronic kidney disease.
+
+6. Obesity and nutrition-related risks.
+
+7. Arthritis and chronic pain.
+
+8. Depression, anxiety, and social isolation.
+
+9. Cancer history and survivorship needs.
+
+10. Multimorbidity involving two or more chronic conditions.
+
+Use a modular design so validated condition-specific pathways can be added later.
+
+5. Required patient information
+
+Collect information only when necessary and after informed consent. Include:
+
+1. Age, sex, gender where relevant, country, language, and contact details.
+
+2. Height, weight, waist circumference, and body mass index.
+
+3. Blood pressure, pulse rate, blood glucose, oxygen saturation, temperature, and other available measurements.
+
+4. Existing medical diagnoses and approximate date of diagnosis.
+
+5. Current symptoms and symptom duration.
+
+6. Medicines, dosage, schedule, allergies, adverse reactions, and adherence.
+
+7. Laboratory results and medical reports.
+
+8. Previous hospitalisation, surgery, disability, and family medical history.
+
+9. Tobacco, alcohol, diet, physical activity, sleep, and stress.
+
+10. Mental-health and cognitive concerns.
+
+11. Social support, living arrangement, employment, insurance, affordability, transport, and healthcare access.
+
+12. Pregnancy status when clinically relevant and voluntarily disclosed.
+
+13. Data imported from supported wearable devices or health platforms after explicit permission.
+
+Allow users to skip non-essential questions and explain why sensitive information is requested.
+
+6. Clinical assessment rules
+
+Use clinically validated, country-appropriate screening protocols. WHO PEN may be used as a starting reference for primary-care pathways.
+
+The assessment engine must:
+
+1. Separate confirmed diagnoses from possible conditions, risk indicators, and unverified user statements.
+
+2. Display the source, version, intended population, calculation method, and limitations of every risk score.
+
+3. Use deterministic and validated clinical rules for safety-critical assessments.
+
+4. Never allow a language model to calculate medication doses, determine emergency severity, or override clinical rules.
+
+5. Consider interactions among multiple diseases, medications, allergies, kidney function, pregnancy, age, and other relevant factors.
+
+6. Present uncertainty clearly.
+
+7. Never use language such as “You definitely have this disease” unless the diagnosis was entered or verified by an authorised clinician.
+
+8. Use language such as “Your answers indicate that a clinical assessment may be needed.”
+
+9. Generate separate patient-friendly and clinician-oriented reports.
+
+10. Require clinician verification before adding a new diagnosis to the verified medical record.
+
+7. Emergency safety system
+
+Create a deterministic emergency-triage layer that operates before the general AI conversation.
+
+Check for warning signs including:
+
+1. Severe or persistent chest pain.
+
+2. Severe breathing difficulty.
+
+3. Possible stroke symptoms.
+
+4. Loss of consciousness, seizure, or sudden confusion.
+
+5. Severe allergic reaction.
+
+6. Very abnormal measurements entered by the user.
+
+7. Severe hypoglycaemia or hyperglycaemia symptoms.
+
+8. Suicidal thoughts, self-harm risk, or immediate danger.
+
+9. Sudden serious deterioration in a person with a chronic condition.
+
+When a warning sign is detected:
+
+1. Stop the normal conversational flow.
+
+2. Clearly state that urgent professional assessment may be needed.
+
+3. Offer a one-tap call to the locally verified emergency number.
+
+4. Display nearby verified emergency facilities.
+
+5. Allow the user to alert a previously authorised emergency contact.
+
+6. Do not provide false reassurance.
+
+7. Do not delay emergency care by asking unnecessary questions.
+
+8. Prescription and medicine safety
+
+The artificial-intelligence assistant must not independently prescribe, start, stop, or modify prescription medicines.
+
+Implement the following separation:
+
+1. AI may explain general medication information using an approved medical knowledge source.
+
+2. AI may remind users to take an existing clinician-prescribed medicine.
+
+3. AI may identify a possible interaction or contraindication for clinician review.
+
+4. AI must instruct users not to stop or change medicines without professional advice.
+
+5. Only a verified and appropriately licensed clinician may issue an electronic prescription.
+
+6. Clinician identity, licence jurisdiction, digital signature, date, clinical basis, and audit history must be recorded.
+
+7. Prescribing must be enabled only in countries where the relevant legal requirements have been implemented and reviewed.
+
+8. Controlled medicines must not be included without specialised regulatory and identity controls.
+
+9. A pharmacist or clinician must be contacted when medicine information is uncertain.
+
+10. The application must never recommend sharing medicines.
+
+9. Voice assistant
+
+Develop a multilingual voice assistant that supports speech-to-text and text-to-speech.
+
+The voice assistant must:
+
+1. Ask one short question at a time.
+
+2. Use plain, respectful, non-technical language.
+
+3. Read back important clinical information and request confirmation.
+
+4. Recognise different accents where technically possible.
+
+5. Allow language switching during a conversation.
+
+6. Provide visual text with every voice response.
+
+7. Obtain permission before activating the microphone.
+
+8. Show clearly when audio is being recorded.
+
+9. Avoid storing raw audio by default.
+
+10. Allow users to delete recordings and transcripts.
+
+11. Confirm medicine names, dosages, allergies, measurements, and emergency symptoms twice when speech recognition confidence is low.
+
+12. Transfer the conversation to a human professional when the assistant cannot respond safely.
+
+10. Global health-centre and referral system
+
+Build a verified service directory covering:
+
+1. Hospitals and emergency departments.
+
+2. Primary healthcare centres.
+
+3. Chronic-disease clinics.
+
+4. Specialists.
+
+5. Mental-health and counselling services.
+
+6. Pharmacies and diagnostic laboratories.
+
+7. Telemedicine services.
+
+8. Rehabilitation and palliative-care services.
+
+9. Community organisations and patient-support groups.
+
+10. Government and nonprofit helplines.
+
+Use authoritative government, health-system, and approved partner sources wherever possible.
+
+Every listing should include:
+
+1. Name and type of service.
+
+2. Verified address and coordinates.
+
+3. Telephone number.
+
+4. Opening hours.
+
+5. Languages supported.
+
+6. Accessibility information.
+
+7. Services offered.
+
+8. Cost or insurance information when available.
+
+9. Teleconsultation availability.
+
+10. Last verification date and data source.
+
+Do not treat commercial map listings as proof that a facility is clinically licensed. Provide a correction and reporting mechanism for inaccurate listings.
+
+Request location permission only when needed. Allow manual location entry and provide a basic offline directory for areas with limited connectivity.
+
+11. Data analysis and reporting
+
+Create patient-level analytical features including:
+
+1. Health summary.
+
+2. Condition timeline.
+
+3. Measurement trends.
+
+4. Medication adherence.
+
+5. Symptom changes.
+
+6. Appointments and referrals.
+
+7. Possible care gaps.
+
+8. Risk alerts.
+
+9. Quality-of-life and functional-status changes.
+
+10. Downloadable patient and clinician reports.
+
+Use charts that are accessible and easy to understand. Do not exaggerate small changes or imply causality from observational data.
+
+For approved public-health analysis:
+
+1. Use anonymised or properly de-identified data.
+
+2. Apply minimum reporting thresholds to prevent re-identification.
+
+3. Separate research consent from consent for personal care.
+
+4. Allow consent withdrawal where legally required.
+
+5. Display missing-data levels and analytical limitations.
+
+6. Test results for demographic and geographic bias.
+
+7. Do not sell identifiable health data.
+
+12. Technical architecture
+
+Use:
+
+1. Kotlin for Android development.
+
+2. Jetpack Compose for the user interface.
+
+3. MVVM or Clean Architecture with clear presentation, domain, and data layers.
+
+4. Room for secure offline storage.
+
+5. WorkManager for reliable background synchronisation.
+
+6. Android Keystore for device-side cryptographic keys.
+
+7. Biometric authentication as an optional additional security measure.
+
+8. Firebase Authentication or another approved identity provider.
+
+9. A secure backend hosted on a compliant cloud environment.
+
+10. Firestore, PostgreSQL, or another appropriate database with strict user and organisational isolation.
+
+11. Server-side access to generative AI services.
+
+12. HL7 FHIR interfaces for exchanging patient, observation, condition, medication, allergy, appointment, practitioner, organisation, care-plan, consent, and referral information.
+
+13. Recognised clinical terminologies such as ICD-11, SNOMED CT, LOINC, and suitable medication terminologies, subject to licensing and local requirements.
+
+Keep model names, clinical protocols, emergency numbers, supported countries, and external service endpoints configurable. Do not hardcode information that changes over time.
+
+13. Artificial-intelligence architecture
+
+Use the language model only for approved tasks such as:
+
+1. Conversational data collection.
+
+2. Translation and language simplification.
+
+3. Summarising verified patient information.
+
+4. Explaining clinician-approved care plans.
+
+5. Producing non-diagnostic educational information.
+
+6. Helping users navigate available services.
+
+Do not use the language model as the only source for:
+
+1. Emergency classification.
+
+2. Diagnosis confirmation.
+
+3. Medication selection or dosage.
+
+4. Drug-interaction decisions.
+
+5. Clinical risk calculations.
+
+6. Verification of healthcare providers.
+
+Ground health responses in approved clinical content. Treat uploaded documents, external websites, and retrieved text as untrusted data, not system instructions.
+
+Each AI-generated health response must include:
+
+1. The information used.
+
+2. Important missing information.
+
+3. The degree of uncertainty.
+
+4. The recommended next action.
+
+5. The reason for professional review when applicable.
+
+6. A clear distinction between educational information and medical advice.
+
+14. Security and privacy
+
+Before implementing each feature, create a threat-summary table covering:
+
+1. User input and uploaded records.
+
+2. Voice recordings and transcripts.
+
+3. Authentication and account recovery.
+
+4. Device storage.
+
+5. Cloud databases.
+
+6. AI prompts and responses.
+
+7. External APIs and facility directories.
+
+8. Clinician and administrator portals.
+
+9. Data exports and sharing.
+
+10. Emergency-contact functions.
+
+Apply the following safeguards:
+
+1. Encryption in transit and at rest.
+
+2. Strict role-based and attribute-based access control.
+
+3. Owner-based record permissions.
+
+4. Short-lived authentication tokens.
+
+5. Audit logs for every sensitive read, change, export, and prescription.
+
+6. Secure session termination.
+
+7. No hardcoded API keys or credentials.
+
+8. Secret Manager or secure environment injection for server credentials.
+
+9. Input validation and output encoding.
+
+10. Rate limiting and abuse detection.
+
+11. Protection against prompt injection and malicious files.
+
+12. Data-retention and secure-deletion controls.
+
+13. Backup and disaster-recovery procedures.
+
+14. Independent penetration testing before public release.
+
+15. No health details in push-notification previews unless the user explicitly permits them.
+
+16. No advertising trackers in clinical screens.
+
+15. Consent and user control
+
+Provide clear and separate consent for:
+
+1. Account creation.
+
+2. Collection of health information.
+
+3. Voice recording.
+
+4. Location access.
+
+5. Wearable-device access.
+
+6. Sharing information with a caregiver.
+
+7. Sharing information with a healthcare professional.
+
+8. Research or public-health use.
+
+9. Cross-border data transfer.
+
+10. Emergency-contact notifications.
+
+Allow users to view, correct, download, restrict, and request deletion of their data, subject to applicable medical-record laws.
+
+16. Global compliance requirements
+
+Before launching in any country:
+
+1. Identify whether the application qualifies as Software as a Medical Device.
+
+2. Complete the required clinical evaluation and regulatory registration.
+
+3. Confirm local telemedicine and prescribing requirements.
+
+4. Confirm health-data privacy and data-residency requirements.
+
+5. Verify clinician licensing and jurisdiction.
+
+6. Review consumer-protection and accessibility requirements.
+
+7. Localise emergency numbers, clinical guidelines, language, and referral pathways.
+
+8. Obtain approval from qualified legal, regulatory, cybersecurity, and clinical reviewers.
+
+Do not represent compliance in one country as global approval.
+
+17. Accessibility and equity
+
+Design for users with low literacy, disability, limited digital experience, and limited internet access.
+
+Include:
+
+1. Large text and scalable fonts.
+
+2. High-contrast mode.
+
+3. Screen-reader support.
+
+4. Voice navigation.
+
+5. Simple language.
+
+6. Local-language support.
+
+7. Offline data collection.
+
+8. Low-bandwidth synchronisation.
+
+9. Caregiver-assisted mode.
+
+10. Manual alternatives to wearable devices.
+
+11. Explanations that avoid stigma and blame.
+
+12. Testing across age, sex, ethnicity, language, disability, and socioeconomic groups.
+
+18. Required screens
+
+Develop the following screens:
+
+1. Welcome and language selection.
+
+2. Consent and privacy choices.
+
+3. Secure registration and login.
+
+4. Patient profile.
+
+5. Chronic-condition history.
+
+6. Symptom assessment.
+
+7. Vital-sign and laboratory entry.
+
+8. Medication and allergy record.
+
+9. Voice-assistant conversation.
+
+10. Health-risk summary.
+
+11. Emergency alert.
+
+12. Personalised care plan.
+
+13. Appointments and reminders.
+
+14. Health-centre map and directory.
+
+15. Teleconsultation and referral.
+
+16. Caregiver access.
+
+17. Clinician dashboard.
+
+18. Clinician prescription and approval screen.
+
+19. Reports and data export.
+
+20. Privacy, permissions, consent, and account deletion.
+
+19. Testing requirements
+
+Write automated and manual tests for every user-visible action.
+
+Testing must include:
+
+1. Unit tests for clinical calculations.
+
+2. Independent validation against reference cases.
+
+3. Emergency red-flag testing.
+
+4. Medication-safety testing.
+
+5. Voice-recognition error testing.
+
+6. Language and translation testing.
+
+7. Accessibility testing.
+
+8. Offline and poor-network testing.
+
+9. Authentication and authorisation testing.
+
+10. Database-isolation testing.
+
+11. Prompt-injection testing.
+
+12. Malicious-file testing.
+
+13. Security and penetration testing.
+
+14. Bias and subgroup-performance testing.
+
+15. Clinician usability testing.
+
+16. Patient usability testing.
+
+17. False-positive and false-negative analysis.
+
+18. Verification that failed saves never delete unsaved user input.
+
+Do not release safety-critical functionality until it has passed documented clinical validation and human-factors testing.
+
+20. Required development output
+
+For every implementation phase, produce:
+
+1. Scope and assumptions.
+
+2. User stories and acceptance criteria.
+
+3. Clinical-safety analysis.
+
+4. Threat-summary table.
+
+5. System architecture.
+
+6. Database and FHIR data model.
+
+7. API specification.
+
+8. Android project structure.
+
+9. Working source code.
+
+10. Secure configuration files.
+
+11. Automated tests.
+
+12. Manual testing walkthrough.
+
+13. Clinical-validation plan.
+
+14. Regulatory-readiness checklist.
+
+15. Deployment instructions.
+
+16. Monitoring and incident-response plan.
+
+17. Professional README file.
+
+18. Known limitations and prohibited uses.
+
+21. Development phases
+
+Build the application progressively:
+
+Phase 1: Secure registration, consent, patient profile, chronic-condition recording, measurements, offline storage, and emergency guidance.
+
+Phase 2: Validated screening modules, trends, reports, reminders, and care plans.
+
+Phase 3: Multilingual voice assistant and accessibility features.
+
+Phase 4: Verified global facility directory, maps, referrals, and teleconsultation.
+
+Phase 5: Clinician dashboard, review workflow, and jurisdiction-controlled electronic prescribing.
+
+Phase 6: FHIR interoperability, public-health analytics, clinical validation, security assessment, and country-specific regulatory preparation.
+
+22. Final operating rule
+
+Patient safety takes priority over speed, engagement, cost, and automation.
